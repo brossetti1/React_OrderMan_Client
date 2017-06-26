@@ -7,7 +7,7 @@
  */
 
 import { history } from '../../Routes';
-import { posts } from '../../../utilities/apiUtilities';
+import { post } from '../../../utilities/apiUtilities';
 
 export const REQUEST_SIGNUP_ACTION = 'REQUEST_SIGNUP_ACTION';
 export const RECEIVE_SIGNUP_SUCCESS = 'RECEIVE_SIGNUP_SUCCESS';
@@ -32,15 +32,13 @@ const receiveSignupFailure = error => ({
 export const performSignup = credentials => {
   return (dispatch) => {
     dispatch(requestSignupAction());
-    post('users/register', credentials)
-      .then((response => {
+    post('/users/register', credentials)
+      .then((response) => {
         dispatch(receiveSignupSuccess);
-        alert('Signup successful! Now go to login!');
         history.push('/login');
       })
-      .catch((error) =>{
+      .catch((error) => {
         dispatch(receiveSignupFailure(error))
       })
-    )
   }
 }

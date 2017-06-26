@@ -10,6 +10,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 
+import {
+  reduxForm,
+  Field
+} from 'redux-form';
+
+import renderTextField from '../../common/forms/renderTextField';
+
 // Component imports
 import SuccessButton from '../../common/buttons/SuccessButton';
 
@@ -23,7 +30,7 @@ import SuccessButton from '../../common/buttons/SuccessButton';
  *   Link from "react-router-dom" that routes to the "/" route for the SignupForm
  *
  */
-export default class LoginForm extends Component {
+class LoginForm extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
@@ -34,22 +41,18 @@ export default class LoginForm extends Component {
             <h3>System Admin <b>Log in</b></h3>
             <div className="spacer" />
             <div className="col-md-10 col-md-offset-1">
-              <div className="form-group">
-                <input
-                  autoComplete="off"
-                  className="form-control"
-                  placeholder="Email"
-                  type="email"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  autoComplete="off"
-                  className="form-control"
-                  placeholder="Password"
-                  type="password"
-                />
-              </div>
+              <Field
+                name="email"
+                component={renderTextField}
+                placeholder="Email"
+                type="email"
+              />
+              <Field
+                name="password"
+                component={renderTextField}
+                placeholder="Password"
+                type="password"
+              />
               <div className="spacer" />
               <SuccessButton
                 block
@@ -79,3 +82,23 @@ LoginForm.propTypes = {
 
 
 LoginForm.defaultProps = {};
+
+
+const validate = (values) => {
+  const errors = {};
+
+  if(!values.email) {
+    errors.email = 'Email is required';
+  }
+
+  if(!values.password) {
+    errors.password = 'Password is required';
+  }
+
+  return errors
+}
+
+export default reduxForm({
+  validate,
+  form: 'loginForm',
+})(LoginForm)

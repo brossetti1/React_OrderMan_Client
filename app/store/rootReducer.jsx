@@ -19,13 +19,19 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 // reducers
+import authReducer   from '../views/Unauthenticated/reducers/authReducer';
+import loginReducer  from '../views/Unauthenticated/reducers/loginReducer';
 import signupReducer from '../views/Unauthenticated/reducers/signupReducer';
+
+
 
 // define main reducer
 const appReducer = combineReducers({
   routing: routerReducer,
   form: formReducer,
-  signup: signupReducer
+  signup: signupReducer,
+  login: loginReducer,
+  auth: authReducer
 });
 
 // export function returning main reducer
