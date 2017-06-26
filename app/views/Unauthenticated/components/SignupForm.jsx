@@ -9,10 +9,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import {
+  reduxForm,
+  Field
+} from 'redux-form';
 
 // Component imports
 import SuccessButton from '../../common/buttons/SuccessButton';
-
+import renderTextField from '../../common/forms/renderTextField';
 
 /**
  * @class SignupForm represents
@@ -23,7 +27,7 @@ import SuccessButton from '../../common/buttons/SuccessButton';
  *   Link from "react-router-dom" that routes to the "/login" route for the LoginForm
  *
  */
-export default class SignupForm extends Component {
+class SignupForm extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
@@ -34,22 +38,17 @@ export default class SignupForm extends Component {
             <h3>System Admin <b>Sign up</b></h3>
             <div className="spacer" />
             <div className="col-md-10 col-md-offset-1">
-              <div className="form-group">
-                <input
-                  autoComplete="off"
-                  className="form-control"
-                  placeholder="Email"
-                  type="email"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  autoComplete="off"
-                  className="form-control"
-                  placeholder="Password"
-                  type="password"
-                />
-              </div>
+              <Field
+                name="email"
+                placeholder="Email"
+                component={renderTextField}
+              />
+              <Field
+                type="password"
+                name="password"
+                placeholder="Password"
+                component={renderTextField}
+              />
               <div className="spacer" />
               <SuccessButton
                 block
@@ -73,10 +72,27 @@ export default class SignupForm extends Component {
   }
 }
 
-
 SignupForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
-
 SignupForm.defaultProps = {};
+
+const validate = (values) => {
+  const errors = {};
+
+  if(!values.email) {
+    errors.email = 'Email is required';
+  }
+
+  if(!values.password) {
+    errors.password = 'Password is required';
+  }
+
+  return errors
+}
+
+export default reduxForm({
+  validate,
+  form: 'signupForm',
+})(SignupForm)

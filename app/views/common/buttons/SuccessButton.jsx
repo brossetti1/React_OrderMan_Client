@@ -50,5 +50,6 @@ SuccessButton.propTypes = {
 SuccessButton.defaultProps = {
   block: false,
   disabled: false,
+  loading: false,
   onClick: () => {},
 };
