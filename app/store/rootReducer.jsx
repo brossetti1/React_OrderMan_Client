@@ -12,3 +12,21 @@
  *
  * @exports The rootReducer
  */
+
+// import individual reduers
+import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux'; 
+import { reducer as formReducer } from 'redux-form';
+
+// reducers
+import signupReducer from '../views/Unauthenticated/reducers/signupReducer';
+
+// define main reducer
+const appReducer = combineReducers({
+  routing: routerReducer,
+  form: formReducer,
+  signup: signupReducer
+});
+
+// export function returning main reducer
+export default (state, action) => appReducer(state, action);

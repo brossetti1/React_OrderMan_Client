@@ -7,13 +7,16 @@
 // Module imports
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 
 // Component imports
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import UnauthenticatedLayout from '../common/layouts/UnauthenticatedLayout';
 
+import {
+  performSignup,
+} from './actions/signupActions';
 
 /**
  * @class UnauthenticatedContainer
@@ -26,7 +29,8 @@ import UnauthenticatedLayout from '../common/layouts/UnauthenticatedLayout';
  *   "/" renders the SignupForm
  *
  */
-export default class UnauthenticatedContainer extends Component {
+
+class UnauthenticatedContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -50,6 +54,12 @@ export default class UnauthenticatedContainer extends Component {
   }
 
   render() {
+
+    const {
+      login,
+      signup,
+    } = this.props;
+
     return (
       <UnauthenticatedLayout>
         <Switch>
@@ -81,4 +91,13 @@ export default class UnauthenticatedContainer extends Component {
 
 UnauthenticatedContainer.propTypes = {};
 
-UnauthenticatedContainer.defaultProps = {};
+const mapStateToProps = state => ({
+  signup: state.signup,
+});
+
+
+const mapDispatchToProps = () => ({
+  performSignup,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps())(UnauthenticatedContainer);

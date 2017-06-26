@@ -19,3 +19,25 @@
  *
  * @exports The created Redux store
  */
+
+import thunkMiddleware from 'redux-thunk';
+import createHashHistory from 'history/createHashHistory';
+
+import {
+  applyMiddleware,
+  compose,
+  createStore,
+} from 'redux'
+
+import { routerMiddleware } from 'react-router-redux';
+
+import rootReducer from './rootReducer';
+
+// export store combined with middleware through compose()
+export default createStore(rootReducer, {}, compose(
+  applyMiddleware(
+    thunkMiddleware,
+    routerMiddleware(createHashHistory()),
+  ),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+))
