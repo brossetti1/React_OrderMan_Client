@@ -15,9 +15,25 @@
 
 // Module imports
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 
 
-export default class CustomersCreateContainer extends Component {
+import CustomerDetailsForm from '../Show/components/CustomerDetailsForm.jsx';
+
+import { performCreateCustomer } from './actions/customersCreateActions.jsx';
+
+
+class CustomersCreateContainer extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.handleSubmit = (e) => {
+      e.preventDefault();
+      const { values } = this.props.customerCreateForm;
+      this.props.performCreateCustomer(values)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -27,7 +43,19 @@ export default class CustomersCreateContainer extends Component {
           <br />
           Only authenticated users should see this!
         </h3>
+        <CustomerDetailsForm handleSubmit={this.handleSubmit}/>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  customersCreate: state.customersCreate,
+  customerCreateForm: state.form.customerDetailsForm,
+})
+
+const mapDispatchToProps = () => ({
+  performCreateCustomer,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps())(CustomersCreateContainer)

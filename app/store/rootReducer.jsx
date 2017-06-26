@@ -20,6 +20,7 @@ import { reducer as formReducer } from 'redux-form';
 
 // reducers
 import authReducer   from '../views/Unauthenticated/reducers/authReducer';
+import customersCreateReducer from '../views/Customers/Create/reducers/customersCreateReducer';
 import loginReducer  from '../views/Unauthenticated/reducers/loginReducer';
 import signupReducer from '../views/Unauthenticated/reducers/signupReducer';
 
@@ -27,6 +28,7 @@ import signupReducer from '../views/Unauthenticated/reducers/signupReducer';
 
 // define main reducer
 const appReducer = combineReducers({
+  customerCreate: customersCreateReducer,
   routing: routerReducer,
   form: formReducer,
   signup: signupReducer,
